@@ -1,0 +1,19 @@
+#taxonomy-event-category #event-category-tabs .hide-if-no-js{
+	display: none !important;
+}
+body.restricted-role .editor-post-taxonomies__hierarchical-terms-list {
+	position: relative;
+}
+body.restricted-role .editor-post-taxonomies__hierarchical-terms-list:after{
+	content: '';
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: rgba(255, 255, 255, 0.8);
+	width: 100%;
+	height: 100%;
+}
+body.restricted-role .editor-post-taxonomies__hierarchical-terms-list.loaded:after{
+	display: none;
+}

@@ -1,0 +1,294 @@
+=== Crop-Thumbnails ===
+Contributors: volkmar-kantor
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=volkmar%2ekantor%40gmx%2ede&lc=DE&item_name=Volkmar%20Kantor%20%2d%20totalmedial%2ede&item_number=crop%2dthumbnails&no_note=0&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest
+Tags: post-thumbnails, images, media library
+Requires at least: 4.6
+Requires PHP: 5.3.0
+Tested up to: 4.9
+Stable tag: 1.1.3
+License: GPL v3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+
+"Crop Thumbnails" made it easy to get exacly that specific image-detail you want to show in your featured image or gallery image.
+
+== Description ==
+
+The plugin provides the functionality to adjust the crop region of cropped images. It add buttons to the edit-pages and media-dialog to access a crop-editor.
+In the crop-editor you can choose one or more (if they have the same ratio) imagesizes and cut-off the part of the image you want.
+
+= How to define cropped image sizes? =
+
+The plugin do not add additional image sizes, it only provides functionality to edit the crop area. 
+
+You can use "`add_image_size`" inside your functions.php to add additional cropped image sizes. [See "add_image_size" documentation](https://developer.wordpress.org/reference/functions/add_image_size/).
+`
+add_action( 'after_setup_theme', 'my_adjust_image_sizes' );
+function my_adjust_image_sizes() {
+    //add an cropped image-size with 800 x 250 Pixels
+    add_image_size( 'my-custom-image-size', 800, 250, true );
+    
+    
+    /** 
+     * The following image sizes use a dynamic value.
+     * USE WITH CARE
+     * Also the plugin supports these image-sizes, i do not recommend them!
+     **/
+    //a dynamic cropped image size with 500 pixel height and the width of the original image
+    add_image_size( 'my-dynamic-width-1', 9999, 500, true );
+    
+    //a dynamic cropped image with the same ratio as the original image and 500 pixel width
+    add_image_size( 'my-dynamic-zero-height-1', 500, 0, true );
+}
+`
+
+After you add the image-size any futher image uploads will produce a cropped image "my-custom-image-size" which you can use in post-loop:
+`
+if ( has_post_thumbnail() ) { 
+    the_post_thumbnail( 'my-custom-image-size' ); 
+}
+`
+
+== Installation ==
+
+You can use the built in installer and upgrader, or you can install the plugin manually.
+
+1. You can either use the automatic plugin installer or your FTP program to upload it to your wp-content/plugins directory the top-level folder. Don't just upload all the php files and put them in /wp-content/plugins/.
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Configure any settings from "Settings > Crop-Thumbnails".
+4. Use it.
+
+== Frequently Asked Questions ==
+
+= What internal rules the plugin use for cropping? =
+* The plugin will only crop image-sizes where crop is set to "`true`" (hard crop mode - see: http://codex.wordpress.org/Function_Reference/add_image_size).
+* If you had set one image dimension in add_image_size() to "`0`", the plugin will crop it in the ratio of the original image.
+* If you had set one image dimension in add_image_size() to "`9999`", the plugin will change the 9999 to the actual size of the current original image.
+* You are able to crop all images with the same ratio at once (default) or and any imagesize (and ratio) seperate.
+
+= I've cropped the image, but the new version do not appear in the frontend. =
+If you had viewed your image on the site before, your browser has cached the image. You can hard refresh the page by hitting:
+* "`CTRL + F5`" (on Windows)
+* "`Apple + R`" or "`command + R`" (on Mac/Apple)
+
+= Is it possible to crop an non-cropped image-size? =
+No. The purpose of this plugin is to provide control for the wordpress automatic crop. If you want to crop let's say the full-size image you should
+
+* a) upload it in a better format in the first place
+* OR b) use the Standard Wordpress-Image editor to crop the image.
+
+= Where can I get developer information? =
+A documentation with a list of all actions and filters can be found on the [Github page of the project](https://github.com/vollyimnetz/crop-thumbnails).
+
+= I have two image-sizes that have nearly the same ratio. I want to make use of the feature "Crop all images with same ratio at once", but cause the ratios are slightly different they wont be selected together. =
+You can add the following filter in the functions.php of your theme to adjust the ratio of one or more specified image-sizes.
+CAUTION: use only when the ratios are really close.
+`
+add_filter( 'crop_thumbnails_editor_printratio', 'my_crop_thumbnails_editor_printratio', 10, 2);
+function my_crop_thumbnails_editor_printratio( $printRatio, $imageSizeName) {
+	if($imageSizeName === 'strange-image-ratio') {
+		$printRatio = '4:3';//do override ratio
+	}
+	return $printRatio;
+}
+`
+
+= I display the cropped image in the backend in an custom meta-box. It does not update after the modal-dialog closed. Is there a way to fix this =
+Yeah, there is a way. After the crop-thumbnails-modal closed it triggeres a javascript event on the body element. You could use jQuery to cache-break your cropped thumbnail (in backend-view).
+The event called "cropThumbnailModalClosed". The plugin also provides a global function that could be called (only in post-edit-view and mediathek) to do the cache-break.
+Example-Code:
+`
+$('body').on('cropThumbnailModalClosed',function() {
+	CROP_THUMBNAILS_DO_CACHE_BREAK( $('.your-image-selector') );
+});
+`
+
+= What languages are supported? =
+* English
+* German (de_DE)
+* brazilian portuguese (pt_BR) - thanks to Alex Meusburger
+* Ukrainian (uk) - thanks to Jurko Chervony from www.skinik.name
+* Italian (it) - thanks to akteon18
+
+= I want to contribute code. =
+Fantastic, i published the code on [github](https://github.com/vollyimnetz/crop-thumbnails). But be warned, i am carefully evaluate new features.
+
+If you fork and planning to publish the forked plugin, please contact me.
+
+== Screenshots ==
+
+1. You have access to the crop-editor on the media-panel by clicking "Crop Featured Image".
+2. Choose one or more images (with the same ratio).
+3. The crop-editor is also integrated in the list-view of the media library.
+4. Choose what image-sizes should be hidden (for what post-types), for better usability.
+5. Quicktest on settings-page, to check if your system is correct setup.
+
+== Changelog ==
+= 1.1.3 =
+* add a filter (crop_thumbnails_activat_on_adminpages), for adding the plugins js/css on futher admin-pages like the taxonomy edit-page.
+* update js and webpack dependencies
+
+= 1.1.2 =
+* add an css-class on the listing of image-sizes
+
+= 1.1.1 =
+* bugfix change use of mime_content_type() to wp_check_filetype() - it seems on some servers mime_content_type() is undefined
+
+= 1.1.0 =
+* bugfix variable was used but not defined (php)
+* bugfix image-size with custom name where not updated in view after crop
+* bugfix all same image-sizes where selected, even if they are not visible
+* in the settings-panel, add more quick-test informations
+* redesign settings-panel
+* make selected image-sizes more clear
+* optimize development-build-process
+* add warning sign for not yet cropped images-sizes
+
+= 1.0.3 =
+* fix js error handling
+* add warning to the backend if the script cant connect the server
+* fix where escape of language-strings make no sense (exceptions in save.php)
+
+= 1.0.2 =
+* improve i18n
+* change language text domain from 'cpt_lang' to 'crop-thumbnails'
+* rename language files to match text domain exactly
+* change 'CROP_THUMBS_VERSION' to 'CROP_THUMBNAILS_VERSION'
+* correct translations of the plugins name
+
+= 1.0.1 =
+* fix code that mess with old php versions
+
+= 1.0.0 =
+* modal dialog rewritten
+* crop functionality refactored
+* changed the crop-library for improved touch support
+* the action "crop_thumbnails_modal_window_settings" is gone, you can adjust style by override admin-css
+* the filter "crop_post_thumbnail_window_css" is gone, you can adjust style by override admin-css
+* adjusting dialog style - make it more responsive
+* reviewed dynamic sizes: sizes with 9999 will no longer have ratio of the original image
+* reviewed dynamic sizes: filenames will no longer be changed
+* fix image-metadata polution
+* refactoring and cleanup a lot of the code
+* change from a language constant to 'cpt_lang'
+* secure translations
+
+= 0.10.15 =
+* bugfix: use wordpress-function to determine mime-type, as some servers do not define "mime_content_type" (Thank you Eskil Keskikangas for the submission)
+
+= 0.10.14 =
+* bugfix: add mime-type to image-metadata (the mime-type was deleted by crop-thumbnails before unintentional)
+
+= 0.10.13 =
+* bugfix: filter-settings will work again in media-dialog
+
+= 0.10.12 =
+* add italian translation (thanks to akteon18)
+
+= 0.10.11 =
+* bugfix: hide disabled image-sizes in the crop-editor again
+
+= 0.10.10 =
+* bugfix: Checks if the current page have a featured image box in the first place
+
+= 0.10.9 =
+* bugfix: click on the button in the featured image box (WP 4.6 and above)
+* button in featured image box is no longer visible if no image is choosed
+* minor style improvements
+
+= 0.10.8 =
+* change empty-array-definition to be compatible with old PHP-Versions (prior 5.4)
+
+= 0.10.7 =
+* fix a behaviour where the 'image_size_names_choose'-filter could remove image-sizes from the settings page
+* add a seperate filter 'crop_thumbnails_image_sizes' to remove/adjust image-sizes used by the plugin (use carefully)
+* use DIRECTORY_SEPARATOR in the save-function
+* add a quicktest to the settings screen
+
+= 0.10.6 =
+* improve the bugfix of 0.10.5 (sorry for that)
+
+= 0.10.5 =
+* bugfix: proper handling of non latin characters in filenames
+
+= 0.10.4 =
+* i18n of the button in the image-media-view changed
+* add 'medium_large' size to (intern) default-sizes (fix notice)
+* add action-hook 'crop_thumbnails_after_save_new_thumb' after save the new thumbnail
+* add filter-hook 'crop_thumbnails_before_update_metadata' before update metadata
+* add filter-hook 'crop_thumbnails_editor_jsonDataValues' in the editor, to adjust dataValues
+* add filter-hook 'crop_thumbnails_editor_printratio' in the editor (see F.A.Q. for details of usage)
+
+= 0.10.3 =
+* small language adjustments
+
+= 0.10.2 =
+* make the modal-dialog more robust against css-overriding of other plugins
+
+= 0.10.1 =
+* small enhancement for developers: add the 'same_ratio_active' parameter in the ajax-request (https://wordpress.org/support/topic/return-same-ratio-daja-in-ajax-request)
+
+= 0.10.0 =
+* refactoring some parts of the code to make it more modular
+* adding a cache breaker to the backend, so in post-view and mediathek the image should be refreshed after the modal-dialog closes
+* provide a javascript-event ('cropThumbnailModalClosed') after the modal is closed (see F.A.Q. for details)
+* provide the human-readable Name of the Crop-Size (if available), using the "image_size_names_choose" filter
+* provide some size settings for the modal-dialog - via filter "crop_thumbnails_modal_window_settings"
+* mini language update
+
+= 0.9.0 =
+* add crop-thumbnail-button to the default attachement-screens so i could accessed better
+* change modal-dialog from thickbox to ui-dialog
+* fix the missing crop-thumbnail-button in the attachment-list-view
+
+= 0.8.4 =
+* fix a bug that may occure on some systems with xdebug enabled and low xdebug.max_nesting_level (see: http://wordpress.org/support/topic/error-when-trying-to-crop-a-certain-image)
+* add dutch language (thanks to Max Gruson)
+
+= 0.8.3 =
+* fix a bug for systems with comma as dezimal seperator (http://wordpress.org/support/topic/doesnt-save-the-cropped-image-anywhere?replies=12#post-4563377)
+* reduce capabilities from "edit_pages" AND "upload_files" to only "upload_files"
+* more informations logged in the console if an error occurs while saving
+
+= 0.8.2 =
+* add filter for customize the style of the crop-thumbnail content ('crop_post_thumbnail_window_css')
+* add a fix for dynamic height/width images (http://wordpress.org/support/topic/dynamic-widthheight)
+* add ukrainian language (thanks to Jurko Chervony from www.skinik.name)
+
+= 0.8.1 =
+* fix warning: when settings are saved
+
+= 0.8.0 =
+* change Constant from CPT_VERSION to CROP_THUMBS_VERSION
+* bug fix: wrong calculated scale in the cpt-crop.js (selection will again always fill the maximum space)
+* change behavior: on landscape-ratio-images the selection will be initial in the middle of the image (portrait-ratio-images stay the same - i asume that portrait-ratio images are mostly portraits)
+* add current jcrop (version v0.9.12) directly into the plugin to get rid of the subversion of cpt-crop.js for an prior version of jcrop in wordpress 3.4
+* add settings-option to display debug (js and/or data)
+* handle image-sizes with zero width or height
+* fix notices: not set variables
+* fix warnings: if an image-size is zero
+
+= 0.7.2 =
+* bug fix: change the way the link in the featured Image-Box is set
+* languages: some adjustments
+
+= 0.7.1 =
+* add language: brazilian portuguese (pt_br)
+* bug fix: fixes for the upcoming Wordpress 3.5
+* bug fix: in crop editor, if an original image is larger than a single selected image-size, the predefined selection will now be on maximum possible size
+* bug fix: ensure that other plugins can´t add styles and scripts into the crop-thumbnail-iframe
+
+= 0.7.0 =
+* workflow-enhancement: change the way the plugin handled same image-ratios (faster editing and less warnings)
+* the image-size with the biggest dimensions now is used for the min-boundaries (jcrop)
+* if the min-boundaries (jcrop) are bigger than original image the min-boundaries turned off
+
+= 0.6.0 =
+* add a settings link in the plugin-listing
+* add a support-author area in the settings
+* update language files
+* Fix the readme-file for correct display informations on wordpress.org
+* add screenshots for wordpress.org
+* add license.txt
+
+= 0.5.0 =
+* Initial Version

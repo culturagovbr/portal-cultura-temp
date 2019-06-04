@@ -1,0 +1,61 @@
+.easy-document-box .card-header{
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.easy-document-box .card-title {
+    font-size: 18px;
+    margin: 0;
+    padding-right: 50px;
+}
+
+.easy-document-box .card-subtitle {
+    font-size: 14px;
+    text-transform: uppercase;
+    line-height: 20px;
+}
+
+.easy-document-box .card-text{
+    margin: 0;
+}
+
+.easy-document-box .btn{
+    margin: 15px 0;
+}
+
+.easy-document-box .card-body .b-top {
+    padding-top: 15px;
+    border-top: 1px solid #dfdfdf;
+}
+
+.easy-document-box .card-body .row{
+    margin-bottom: 30px;
+}
+
+.easy-document-box .card-body .row:last-child {
+    margin-bottom: 0;
+}
+
+.easy-document-box .card-body .col-4 {
+    position: relative;
+}
+
+.easy-document-box .card-body .col-4:first-child:before {
+    display: none;
+}
+
+.easy-document-box .card-body .col-4:before {
+    -webkit-transform: translateY(-50%);;
+    -moz-transform:    translateY(-50%);;
+    -ms-transform:     translateY(-50%);;
+    -o-transform:      translateY(-50%);;
+    transform:         translateY(-50%);;
+
+    content: "";
+    width: 1px;
+    height: 50%;
+    position: absolute;
+    left: -35px;
+    top: 50%;
+    background: rgba(0, 0, 0, .3);
+}
