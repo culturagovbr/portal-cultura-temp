@@ -55,6 +55,7 @@
           <li><a class="scrollLink" href="#depoimentos">Depoimentos</a></li>
           <li><a class="scrollLink" href="#saiba-mais">Saiba Mais</a></li>
           <li><a class="scrollLink" href="#perguntas-frequentes">Perguntas Frequentes</a></li>
+          <li><a class="scrollLink" href="#acesso-direto">Acesso Direto</a></li>
         </ul>
       </div>
     </div>
@@ -304,7 +305,7 @@
        </div>
     </section>
 
-    <section class="pt-5 pb-5" id="perguntas-frequentes">
+    <section class="pt-5 pb-5 bg-grey-2" id="perguntas-frequentes">
       <div class="container">
         <h2 class="section-title mb-5 text-center">Perguntas Frequentes</h2>
 
@@ -493,6 +494,38 @@
 
       </div>
     </section>
+
+    <section class="image-and-text" id="acesso-direto">
+      <h2 class="section-title mb-5 text-center">Acesso Direto</h2>
+
+      <div class="container">
+        <div class="row text-center align-items-center wrapper-box">
+           <div class="col">
+              <div class="feature-card static-height">
+                <h3 class="card-title"><a href="http://vale.cultura.gov.br/" target="_blank">Credenciamento</a></h3>
+              </div>
+           </div>
+           <div class="col">
+              <div class="feature-card static-height">
+                <h3 class="card-title"><a href="http://antigo.cultura.gov.br/legislacao/-/asset_publisher/siXI1QMnlPZ8/content/vale-cultura-legislacao/10937" target="_blank">Legislação</a></h3>
+              </div>
+           </div>
+           <div class="col">
+              <div class="feature-card static-height">
+                <h3 class="card-title"><a href="http://cultura.gov.br/wp-content/uploads/2019/03/Manual_0804602_Vale_cultura_manual_identidade_2019.pdf" target="_blank">Manual <br/> Identidade Visual</a></h3>
+              </div>
+           </div>
+           <div class="col">
+              <div class="feature-card static-height">
+                <h3 class="card-title"><a href="http://vale.cultura.gov.br/contato" target="_blank">Fale Conosco</a></h3>
+              </div>
+           </div>
+        </div>
+      </div>
+
+    </section>
+
+
   </div>
 
 
