@@ -27,10 +27,15 @@
       </div>
 
       <div class="carousel-item">
-        <img class="d-block w-100" src="<?php echo get_template_directory_uri() ?>/assets/img/2_infografico-inicio-1.jpg">
+        <img class="d-block w-100" src="<?php echo get_template_directory_uri() ?>/assets/img/2_infografico-inicio-1.jpg?3">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="<?php echo get_template_directory_uri() ?>/assets/img/2_infografico-inicio-2.jpg" alt="Third slide">
+        <img class="d-block w-100" src="<?php echo get_template_directory_uri() ?>/assets/img/2_infografico-inicio-2.jpg?3" alt="Third slide">
+      </div>
+      <div class="carousel-item">
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/ZEDmrqlJeRw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
       </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
@@ -101,8 +106,8 @@
 
           <ul>
             <li>Beneficiária: Empresa que deseja conceder o benefício para seus trabalhadores, devidamente cadastrada no programa; <a href="http://cultura.gov.br/vale-cultura/para-a-empresa-beneficiaria/">saiba mais</a>:</li>
-            <li>Operadora: Empresa cadastrada no programa e autorizada a emitir o cartão; <a href="http://cultura.gov.br/vale-cultura/para-empresas-recebedoras/">saiba mais</a>:</li>
-            <li>Recebedora: Empresa habilitada por operadora cuja atividade econômica e produtos constem da lista do programa; <a href="http://cultura.gov.br/vale-cultura/para-as-operadoras/">saiba mais</a>:</li>
+            <li>Operadora: Empresa cadastrada no programa e autorizada a emitir o cartão; <a href="http://cultura.gov.br/vale-cultura/para-as-operadoras/">saiba mais</a>:</li>
+            <li>Recebedora: Empresa habilitada por operadora cuja atividade econômica e produtos constem da lista do programa; <a href="http://cultura.gov.br/vale-cultura/para-empresas-recebedoras/">saiba mais</a>:</li>
             <li>Usuário: Trabalhador com vínculo empregatício com a beneficiária. <a href="http://cultura.gov.br/vale-cultura/para-o-trabalhador/">saiba mais</a>:</li>
           </ul>
 
@@ -111,6 +116,8 @@
           <p>As empresas recebedoras deverão fazer contato com as operadoras ativas no programa, bem como verificar a compatibilidade da sua CNAE</p>
           <p>A fiscalização do programa compete aos Ministérios da Cidadania (Secretaria Especial da Cultura) e da Economia (Secretaria Especial da Fazenda e Secretaria do Trabalho), conforme previsto na legislação vigente. A Secretaria Especial da Cultura é a responsável pela fiscalização do uso do Vale-Cultura para a aquisição de bens e serviços culturais.</p>
           <p>Desta forma, é fundamental a observância do uso adequado do benefício por parte de todos os envolvidos para que o programa não perca o seu objetivo que é garantir a democratização de acesso a bens e produtos culturais.</p>
+
+          <p>Acesse a <a href="http://cultura.gov.br/wp-content/uploads/2019/06/Lista-de-Produtos-e-CNAES.pdf" target="_blank">Lista de Produtos e Serviços do Vale-Cultura</a>.</p>
         </div>
       </div>
     </section>
@@ -507,7 +514,7 @@
            </div>
            <div class="col">
               <div class="feature-card static-height">
-                <h3 class="card-title"><a href="http://antigo.cultura.gov.br/legislacao/-/asset_publisher/siXI1QMnlPZ8/content/vale-cultura-legislacao/10937" target="_blank">Legislação</a></h3>
+                <h3 class="card-title"><a href="http://cultura.gov.br/documentos/legislacao-vale-cultura/">Legislação</a></h3>
               </div>
            </div>
            <div class="col">
