@@ -519,7 +519,7 @@
            </div>
            <div class="col">
               <div class="feature-card static-height">
-                <h3 class="card-title"><a href="http://cultura.gov.br/wp-content/uploads/2019/03/Manual_0804602_Vale_cultura_manual_identidade_2019.pdf" target="_blank">Manual <br/> Identidade Visual</a></h3>
+                <h3 class="card-title"><a href="http://cultura.gov.br/wp-content/uploads/2019/05/Marcas-Vale-Cultura.zip" target="_blank">Manual <br/> Identidade Visual</a></h3>
               </div>
            </div>
            <div class="col">
