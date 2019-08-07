@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Class Sdbpi_Qrlda_Shortcodes
+ * Class Sdapi_Qrlda_Shortcodes
  *
  */
-class Sdbpi_Qrlda_Shortcodes
+class Sdapi_Qrlda_Shortcodes
 {
 
     public function __construct()
     {       
-       add_shortcode('proposta_lda_2019_sdbpi', array($this,'proposta_lda_2019_sdbpi_form_shortcode'));
+       add_shortcode('proposta_lda_2019_sdbpi', array($this,'proposta_lda_2019_sdapi_form_shortcode'));
        add_shortcode('proposta_lda_2019_mensage', array($this, 'proposta_lda_2019_mensage'));
     }
 
@@ -20,7 +20,7 @@ class Sdbpi_Qrlda_Shortcodes
      * @return string
      */
 
-    public function proposta_lda_2019_sdbpi_form_shortcode($atts)
+    public function proposta_lda_2019_sdapi_form_shortcode($atts)
     {
         $atts = shortcode_atts(array(
             'form-group-id' => '',
@@ -39,7 +39,7 @@ class Sdbpi_Qrlda_Shortcodes
                 'post_status' => 'publish'
             ),
             'updated_message' => 'Questionario enviado com sucesso.',
-            'return' => $atts['return'],
+            'return' => '',
             'submit_value' => 'Salvar dados'
         );
         acf_form($settings);
