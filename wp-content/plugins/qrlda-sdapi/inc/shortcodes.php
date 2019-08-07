@@ -24,7 +24,7 @@ class Sdapi_Qrlda_Shortcodes
     {
         $atts = shortcode_atts(array(
             'form-group-id' => '',
-            'return' => '/outro-teste/?updated=true'
+            'return' => '/updated=true'
         ), $atts);
 
         ob_start();
@@ -39,7 +39,7 @@ class Sdapi_Qrlda_Shortcodes
                 'post_status' => 'publish'
             ),
             'updated_message' => 'Questionario enviado com sucesso.',
-            'return' => '',
+            'return' => $atts['return'],
             'submit_value' => 'Salvar dados'
         );
         acf_form($settings);
