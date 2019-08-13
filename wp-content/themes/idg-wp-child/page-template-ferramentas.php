@@ -114,8 +114,7 @@
                     <li>Projetos Culturais</li>
                     <li>Propostas (de projetos culturais)</li>
                     <li>Proponentes</li>
-                    <li>Incentivadores</li>ma
-
+                    <li>Incentivadores</li>
                     <li>Fornecedores</li>
                 </ul>
                 <p>A API retorna os recursos nos formatos JSON (padrão), XML e CSV. O VerSalic utiliza esta API de dados abertos para acesso dinâmico ao SALIC. Estude o código-fonte e proponha novas visualizações!</p>
