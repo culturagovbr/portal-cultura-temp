@@ -168,6 +168,20 @@ function wp_show_widget($index, $id)
 	endif;
 	?>
 
+	<section id="participacao-social" class="mt-5 mb-5">
+		<div class="container">
+			<div class="row">
+				<div class="overflow-wrapper">
+					<?php
+					if ( is_active_sidebar( 'social-participation-widgets-area' ) ) :
+						dynamic_sidebar( 'social-participation-widgets-area' );
+					endif;
+					?>
+				</div>
+			</div>
+		</div>
+	</section>
+
 	<section id="multimidia" class="mt-5">
 		<div class="container">
 			<div class="row">
