@@ -1,6 +1,63 @@
 <?php /* Template Name: SDAPI */ ?>
 
-<?php get_header(); ?>
+<?php
+
+get_header();
+
+/**
+ * @param $index
+ * @param $id
+ * @return bool
+ * @author Walquirio Saraiva Rocha
+ * @version 1.0
+ * @copyright desenvolvido para secretaria sdapi - exibir a section sdapi todos os itens de imagens e textos
+ */
+function wp_show_widget($index, $id)
+{
+	global $wp_registered_widgets, $wp_registered_sidebars;
+	$did_one = false;
+
+	if (!isset($wp_registered_widgets[$id])
+		|| !isset($wp_registered_widgets[$id]['params'][0])) :
+		return false;
+	endif;
+
+	$sidebars_widgets = wp_get_sidebars_widgets();
+	if (empty($wp_registered_sidebars[$index])
+		|| empty($sidebars_widgets[$index])
+		|| !is_array($sidebars_widgets[$index])) :
+		return false;
+	endif;
+
+	$sidebar = $wp_registered_sidebars[$index];
+	$params = array_merge(
+		array(array_merge($sidebar, array('widget_id' => $id, 'widget_name' => $wp_registered_widgets[$id]['name']))),
+		(array)$wp_registered_widgets[$id]['params']
+	);
+
+	$classname_ = '';
+	foreach ((array)$wp_registered_widgets[$id]['classname'] as $cn):
+		if (is_string($cn)):
+			$classname_ .= '_' . $cn;
+		elseif (is_object($cn)):
+			$classname_ .= '_' . get_class($cn);
+		endif;
+	endforeach;
+
+	$classname_ = ltrim($classname_, '_');
+	$params[0]['before_widget'] = sprintf($params[0]['before_widget'], $id, $classname_);
+	$params = apply_filters('dynamic_sidebar_params', $params);
+
+	$callback = $wp_registered_widgets[$id]['callback'];
+	if (is_callable($callback)):
+		call_user_func_array($callback, $params);
+		$did_one = true;
+	endif;
+
+	return $did_one;
+}
+
+?>
 
 <script type='text/javascript'>
     jQuery(function () {
@@ -70,8 +127,7 @@
 		</div>
 	</section>
 
-	<?php if (!idg_wp_get_option('_home_widgets_sections_disable')): ?>
-		<?php
+	<?php if (!idg_wp_get_option('_home_widgets_sections_disable')):
 		$idg_wp_widgets_areas = get_theme_mod('idg_wp_widgets_areas');
 		foreach ($idg_wp_widgets_areas['areas'] as $chaveArea => $valorArea) :
 			if (strtolower($valorArea['name']) == 'sdapi'):
@@ -80,16 +136,9 @@
 						 class="<?php echo empty($valorArea['section_class']) ? 'mt-5 mb-5 pt-4' : $valorArea['section_class']; ?>">
 					<div class="container">
 						<div class="row">
-							<?php if ($valorArea['section_title']): ?>
-								<div class="col-lg-12">
-									<h2 class="section-title mb-5 text-center"><?php echo $valorArea['section_title']; ?></h2>
-								</div>
-							<?php endif; ?>
 							<div class="overflow-wrapper">
 								<?php
-								if (is_active_sidebar($chaveArea)) :
-									dynamic_sidebar($chaveArea);
-								endif;
+								is_active_sidebar($chaveArea);
 								?>
 							</div>
 						</div>
@@ -100,11 +149,29 @@
 		endforeach; ?>
 	<?php endif; ?>
 
+	<?php
+	if (!idg_wp_get_option('_home_widgets_sections_disable')):
+		$idg_wp_widgets_areas = get_theme_mod('idg_wp_widgets_areas');
+		$widget_list = get_option('sidebars_widgets');
+
+		foreach ($widget_list as $key=>$widget):
+			foreach ($widget as $wid):
+				foreach ($idg_wp_widgets_areas['areas'] as $chaveArea => $valorArea) :
+					if (strtolower($valorArea['name']) == 'sdapi' && $chaveArea == $key):
+						echo "<div class='container'>";
+						wp_show_widget($chaveArea, $wid);
+						echo "</div>";
+					endif;
+				endforeach;
+			endforeach;
+		endforeach;
+	endif;
+	?>
+
 	<section id="multimidia" class="mt-5">
 		<div class="container">
 			<div class="row">
 				<?php get_template_part('template-parts/multimedia-block'); ?>
-
 				<a href="<?php echo get_bloginfo('url'); ?>/multimedia" class="btn btn-ver-mais">Mais Vídeos</a>
 			</div>
 		</div>
@@ -113,4 +180,3 @@
 </main>
 
 <?php get_footer(); ?>
-
