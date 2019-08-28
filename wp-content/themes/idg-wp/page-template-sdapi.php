@@ -60,9 +60,9 @@ function wp_show_widget($index, $id)
 ?>
 
 <script type='text/javascript'>
-    jQuery(function () {
+    /*jQuery(function () {
         jQuery('.page-template').addClass('home');
-    });
+    });*/
 </script>
 
 <main id="page-sdapi" class="site-main">
