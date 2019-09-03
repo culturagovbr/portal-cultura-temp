@@ -84,15 +84,12 @@ function wp_show_widget($index, $id)
 	if (!idg_wp_get_option('_home_widgets_sections_disable')):
 		$idg_wp_widgets_areas = get_theme_mod('idg_wp_widgets_areas');
 		$widget_list = get_option('sidebars_widgets');
-		$contador = 0;
+		//exibindo a section carousel
 		foreach ($widget_list as $key => $widget):
 			foreach ($widget as $wid):
 				foreach ($idg_wp_widgets_areas['areas'] as $chaveArea => $valorArea) :
 					if (preg_match('/' . 'sdapi' . '/', $valorArea['section_title'])):
 						$pattern1 = '/' . 'carousel' . '/';
-						$pattern2 = '/' . 'text_image_box' . '/';
-						$pattern3 = '/' . 'feature_card' . '/';
-						$pattern4 = '/' . 'media_video' . '/';
 						if (preg_match($pattern1, $wid) && $valorArea['section_title'] == 'carousel-sdapi'):
 							?>
 							<section class="carousel-wrapper">
@@ -100,17 +97,30 @@ function wp_show_widget($index, $id)
 								wp_show_widget($chaveArea, $wid);
 								?>
 							</section>
+						<?php
+						endif;
+						?>
+					<?php
+					endif;
+				endforeach;
+			endforeach;
+		endforeach;
 
-							<section id="news" class="pb-5 pt-5">
-							<div class="container">
-							<div class="row">
+		?>
+
+		<?php
+		$categorias = get_categories(array('name' => 'sdapi'));
+		$categoria = current($categorias);
+		//se existir noticias da categoria sdapi vai exibir
+		if ($categoria):
+			$args = array('category_name' => $categoria->slug, 'posts_per_page' => 3);
+			$post_sdapi = new WP_Query($args);
+
+			if ($post_sdapi->have_posts()) : ?>
+				<section id="news" class="pb-5 pt-5">
+					<div class="container">
+						<div class="row">
 							<div class="overflow-wrapper">
-							<?php
-							$categorias = get_categories(array('name' => 'sdapi'));
-							$categoria = current($categorias);
-							$args = array('category_name' => $categoria->slug, 'posts_per_page' => 3);
-							$post_sdapi = new WP_Query($args);
-							if ($post_sdapi->have_posts()) : ?>
 								<?php
 								foreach ($post_sdapi->posts as $post):
 									?>
@@ -137,40 +147,81 @@ function wp_show_widget($index, $id)
 								<?php endforeach;
 								wp_reset_postdata();
 								?>
-								</div>
-								<div class="col-lg-12 text-center">
-									<a href="<?php echo home_url('/categoria/sdapi/'); ?>"
-									   class="btn text-uppercase mt-1">Mais
-										notícias</a>
-								</div>
-								</div>
-								</div>
-								</section>
-							<?php
-							endif;
-						elseif (preg_match($pattern2, $wid) && $valorArea['section_title'] == 'imagem-texto-sdapi'):
+							</div>
+							<div class="col-lg-12 text-center">
+								<a href="<?php echo home_url('/categoria/sdapi/'); ?>"
+								   class="btn text-uppercase mt-1">Mais
+									notícias</a>
+							</div>
+						</div>
+					</div>
+				</section>
+			<?php
+			endif;
+		endif;
+
+		//exibindo a secao de texto e imagem
+		foreach ($widget_list as $key => $widget):
+			foreach ($widget as $wid):
+				foreach ($idg_wp_widgets_areas['areas'] as $chaveArea => $valorArea) :
+					if (preg_match('/' . 'sdapi' . '/', $valorArea['section_title'])):
+						$pattern2 = '/' . 'text_image_box' . '/';
+						if (preg_match($pattern2, $wid) && $valorArea['section_title'] == 'imagem-texto-sdapi'):
 							echo "<div class='container'><section>";
 							wp_show_widget($chaveArea, $wid);
 							echo "</section></div>";
-						elseif (preg_match($pattern3, $wid) && $valorArea['section_title'] == 'ferramentas-sdapi'): ?>
-							<section class="mt-1 mb-1">
-								<div class="container">
-									<div class="row">
-										<div class="overflow-wrapper">
-											<?php
-											if (is_active_sidebar($chaveArea)) :
-												$contador++;
-												if ($contador == 1):
+						endif;
+						?>
+					<?php
+					endif;
+				endforeach;
+			endforeach;
+		endforeach;
+
+		$contador = 0;
+		//exibindo a section de ferramentas
+		foreach ($widget_list as $key => $widget):
+			foreach ($widget as $wid):
+				foreach ($idg_wp_widgets_areas['areas'] as $chaveArea => $valorArea) :
+					if (preg_match('/' . 'sdapi' . '/', $valorArea['section_title'])):
+						$pattern3 = '/' . 'feature_card' . '/';
+						if (preg_match($pattern3, $wid) && $valorArea['section_title'] == 'ferramentas-sdapi'): ?>
+							<?php
+							if (is_active_sidebar($chaveArea)) :
+								$contador++;
+								if ($contador == 1):
+									?>
+									<section class="mt-1 mb-1">
+										<div class="container">
+											<div class="row">
+												<div class="overflow-wrapper">
+													<?php
 													dynamic_sidebar($chaveArea);
-												endif;
-											endif;
-											?>
+													?>
+												</div>
+											</div>
 										</div>
-									</div>
-								</div>
-							</section>
+									</section>
+								<?php
+								endif;
+							endif;
+							?>
 						<?php
-						elseif (preg_match($pattern4, $wid) && $valorArea['section_title'] == 'multimidia-sdapi'):
+						endif;
+						?>
+					<?php
+					endif;
+				endforeach;
+			endforeach;
+		endforeach;
+
+		//exibindo section de multimidia
+		foreach ($widget_list as $key => $widget):
+			foreach ($widget as $wid):
+				foreach ($idg_wp_widgets_areas['areas'] as $chaveArea => $valorArea) :
+					if (preg_match('/' . 'sdapi' . '/', $valorArea['section_title'])):
+						$pattern4 = '/' . 'media_video' . '/';
+						if (preg_match($pattern4, $wid) && $valorArea['section_title'] == 'multimidia-sdapi'):
 							echo "<section id='multimidia' class='mt-2'><div class='container'>";
 							wp_show_widget($chaveArea, $wid);
 							echo "</div></section>";
