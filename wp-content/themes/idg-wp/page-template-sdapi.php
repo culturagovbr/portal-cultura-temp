@@ -109,7 +109,7 @@ function wp_show_widget($index, $id)
 		?>
 
 		<?php
-		$categorias = get_categories(array('name' => 'sdapi'));
+		$categorias = get_categories(array('slug' => 'destaquinho-sdapi'));
 		$categoria = current($categorias);
 		//se existir noticias da categoria sdapi vai exibir
 		if ($categoria):
@@ -117,12 +117,13 @@ function wp_show_widget($index, $id)
 			$post_sdapi = new WP_Query($args);
 
 			if ($post_sdapi->have_posts()) : ?>
-				<section id="news" class="pb-5 pt-5">
+				<section id="news" class="pb-5 pt-5 bg-grey-2">
 					<div class="container">
 						<div class="row">
 							<div class="overflow-wrapper">
 								<?php
 								foreach ($post_sdapi->posts as $post):
+									$post_sdapi->the_post();
 									?>
 									<div class="col-lg-4 mb-5">
 										<?php
@@ -167,7 +168,7 @@ function wp_show_widget($index, $id)
 					if (preg_match('/' . 'sdapi' . '/', $valorArea['section_title'])):
 						$pattern2 = '/' . 'text_image_box' . '/';
 						if (preg_match($pattern2, $wid) && $valorArea['section_title'] == 'imagem-texto-sdapi'):
-							echo "<div class='container'><section>";
+							echo "<div class='container' style='padding-top: 4%;'><section>";
 							wp_show_widget($chaveArea, $wid);
 							echo "</section></div>";
 						endif;
